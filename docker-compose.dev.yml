@@ -1,0 +1,33 @@
+# Development stack: hot reload + MongoDB
+# docker compose -f docker-compose.dev.yml up --build
+
+services:
+  mongo:
+    image: mongo:7
+    ports:
+      - "27017:27017"
+    volumes:
+      - luna_mongo_dev:/data/db
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      MONGODB_URI: mongodb://mongo:27017/luna
+      JWT_SECRET: docker-dev-secret
+      NEXT_PUBLIC_BASE_URL: http://localhost:3000
+      NEXT_PUBLIC_PAYPAL_CLIENT_ID: sb
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-}
+    depends_on:
+      - mongo
+    command: npm run dev
+
+volumes:
+  luna_mongo_dev:

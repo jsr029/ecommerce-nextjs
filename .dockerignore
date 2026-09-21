@@ -1,0 +1,14 @@
+node_modules
+.next
+.git
+.gitignore
+*.md
+.env*
+!.env.example
+npm-debug.log*
+Dockerfile*
+docker-compose*
+.vercel
+coverage
+*.zip
+ecommerce-nextjs.zip

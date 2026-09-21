@@ -1,0 +1,74 @@
+# LUNA — Docker Compose (app Next.js + MongoDB)
+#
+# Usage:
+#   cp .env.example .env
+#   # Edit .env (JWT_SECRET, Google, PayPal...)
+#   docker compose up --build
+#
+# App:  http://localhost:3000
+# Mongo: mongodb://localhost:27017/luna
+#
+# Seed (one-shot):
+#   docker compose run --rm app node -e "console.log('use: docker compose exec app ...')"
+#   Or from host with MONGODB_URI=mongodb://localhost:27017/luna npm run seed
+
+services:
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - luna_mongo_data:/data/db
+    environment:
+      # Optional auth — leave empty for local dev
+      # MONGO_INITDB_ROOT_USERNAME: root
+      # MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: luna
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL:-http://localhost:3000}
+        NEXT_PUBLIC_PAYPAL_CLIENT_ID: ${NEXT_PUBLIC_PAYPAL_CLIENT_ID:-sb}
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      MONGODB_URI: mongodb://mongo:27017/luna
+      JWT_SECRET: ${JWT_SECRET:-docker-dev-secret-change-me}
+      NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL:-http://localhost:3000}
+      NEXT_PUBLIC_PAYPAL_CLIENT_ID: ${NEXT_PUBLIC_PAYPAL_CLIENT_ID:-sb}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-}
+      BLOB_READ_WRITE_TOKEN: ${BLOB_READ_WRITE_TOKEN:-}
+      NODE_ENV: production
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+  # Optional: run seed once
+  # docker compose --profile seed run --rm seed
+  seed:
+    profiles: ["seed"]
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    working_dir: /app
+    environment:
+      MONGODB_URI: mongodb://mongo:27017/luna
+      JWT_SECRET: ${JWT_SECRET:-docker-dev-secret-change-me}
+    command: npx tsx src/lib/seed.ts
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+volumes:
+  luna_mongo_data:
