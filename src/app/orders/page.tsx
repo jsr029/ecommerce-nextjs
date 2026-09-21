@@ -136,10 +136,10 @@ function OrdersContent() {
                     order.status === "delivered" ||
                     order.status === "shipped" ||
                     order.status === "processing"
-                      ? "text-emerald-400 font-medium"
+                      ? "text-emerald-400 font-normal"
                       : order.status === "cancelled"
                       ? "text-red-400"
-                      : "text-amber-400 font-medium"
+                      : "text-amber-400 font-normal"
                   }
                 >
                   {order.status === "pending"
@@ -173,7 +173,7 @@ function OrdersContent() {
                         (order.status === "paid" || order.status === "delivered") && (
                           <button
                             onClick={() => handleDownload(order._id, item.product)}
-                            className="flex items-center gap-1 text-gold-400 hover:text-gold-300 text-xs font-medium"
+                            className="flex items-center gap-1 text-gold-400 hover:text-gold-300 text-xs font-normal"
                           >
                             <Download className="w-3.5 h-3.5" />
                             Télécharger
