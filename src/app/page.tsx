@@ -82,14 +82,14 @@ export default async function HomePage() {
             </Link>
             <Link
               href="/live"
-              className="inline-flex items-center gap-2 border border-red-500/50 text-red-400 font-medium px-8 py-3.5 rounded-full hover:bg-red-500/10 transition text-sm"
+              className="inline-flex items-center gap-2 border border-red-500/50 text-red-400 font-normal px-8 py-3.5 rounded-full hover:bg-red-500/10 transition text-sm"
             >
               <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
               Live maintenant
             </Link>
             <Link
               href="/events"
-              className="inline-flex items-center gap-2 border border-white/15 text-stone-300 font-medium px-8 py-3.5 rounded-full hover:border-gold-500/40 hover:text-gold-400 transition text-sm"
+              className="inline-flex items-center gap-2 border border-white/15 text-stone-300 font-normal px-8 py-3.5 rounded-full hover:border-gold-500/40 hover:text-gold-400 transition text-sm"
             >
               Dates de tournée
             </Link>
