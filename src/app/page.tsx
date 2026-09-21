@@ -1,29 +1,44 @@
 import Link from "next/link";
-import { getBaseUrl } from "@/lib/baseUrl";
 import ProductCard from "@/components/ProductCard";
 import { Product, Event } from "@/types";
 import { ArrowRight, MapPin } from "lucide-react";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
+import dbConnect from "@/lib/db";
+import ProductModel from "@/models/Product";
+import EventModel from "@/models/Event";
 
+/** Serialize Mongo lean docs for Client Components */
+function serialize<T>(data: unknown): T {
+  return JSON.parse(JSON.stringify(data)) as T;
+}
+
+/**
+ * Query MongoDB directly in the Server Component.
+ * Avoids self-HTTP fetch (which often returns HTML on Vercel → JSON parse error).
+ */
 async function getFeaturedProducts(): Promise<Product[]> {
   try {
-    const base = getBaseUrl();
-    const res = await fetch(`${base}/api/products?featured=true`, { cache: "no-store" });
-    if (!res.ok) return [];
-    return res.json();
-  } catch {
+    await dbConnect();
+    const products = await ProductModel.find({ featured: true })
+      .sort({ createdAt: -1 })
+      .lean();
+    return serialize<Product[]>(products);
+  } catch (e) {
+    console.error("[home] products", e);
     return [];
   }
 }
 
 async function getFeaturedEvents(): Promise<Event[]> {
   try {
-    const base = getBaseUrl();
-    const res = await fetch(`${base}/api/events?featured=true`, { cache: "no-store" });
-    if (!res.ok) return [];
-    return res.json();
-  } catch {
+    await dbConnect();
+    const events = await EventModel.find({ featured: true })
+      .sort({ date: 1 })
+      .lean();
+    return serialize<Event[]>(events);
+  } catch (e) {
+    console.error("[home] events", e);
     return [];
   }
 }
@@ -36,7 +51,6 @@ export default async function HomePage() {
 
   return (
     <div className="bg-stage-glow">
-      {/* Hero */}
       <section className="relative overflow-hidden">
         <div
           className="absolute inset-0 opacity-40"
@@ -83,7 +97,6 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Featured releases */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="flex items-end justify-between mb-10">
           <div>
@@ -109,7 +122,6 @@ export default async function HomePage() {
         )}
       </section>
 
-      {/* Tour dates teaser */}
       {events.length > 0 && (
         <section className="border-y border-white/5 bg-stage-900/40 py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -152,7 +164,6 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* Fan club CTA */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="relative rounded-3xl overflow-hidden border border-gold-500/20 bg-gradient-to-br from-purple-950/50 via-stage-900 to-stage-950 p-10 md:p-14 text-center">
           <p className="text-[11px] uppercase tracking-[0.3em] text-gold-500 mb-3">Fan Club</p>

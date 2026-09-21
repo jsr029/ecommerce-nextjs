@@ -33,7 +33,7 @@ docker compose -f docker-compose.dev.yml up --build
 | Variable | Docker Compose |
 |----------|----------------|
 | `MONGODB_URI` | `mongodb://mongo:27017/luna` (réseau interne) |
-| `NEXT_PUBLIC_BASE_URL` | `http://localhost:3000` |
+| `BASE_URL` | `http://localhost:3000` |
 | `GOOGLE_CLIENT_ID` / `SECRET` | depuis `.env` |
 
 ## Notes

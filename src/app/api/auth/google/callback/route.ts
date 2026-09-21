@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
   const error = request.nextUrl.searchParams.get("error");
 
   const origin =
-    process.env.NEXT_PUBLIC_BASE_URL ||
+    process.env.BASE_URL ||
     (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : request.nextUrl.origin);
   const base = origin.replace(/\/$/, "");
 

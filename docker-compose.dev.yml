@@ -21,7 +21,7 @@ services:
     environment:
       MONGODB_URI: mongodb://mongo:27017/luna
       JWT_SECRET: docker-dev-secret
-      NEXT_PUBLIC_BASE_URL: http://localhost:3000
+      BASE_URL: http://localhost:3000
       NEXT_PUBLIC_PAYPAL_CLIENT_ID: sb
       GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
       GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-}

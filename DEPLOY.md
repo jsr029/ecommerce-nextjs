@@ -64,7 +64,7 @@ Uploadez hors de l’app, stockez l’URL HTTPS dans MongoDB.
 |----------|---------|--------|
 | `MONGODB_URI` | `mongodb+srv://...` | **Obligatoire** Atlas |
 | `JWT_SECRET` | chaîne longue aléatoire | `openssl rand -base64 32` |
-| `NEXT_PUBLIC_BASE_URL` | `https://votre-app.vercel.app` | Production / Preview |
+| `BASE_URL` | `https://votre-app.vercel.app` | Serveur only — OAuth callbacks |
 | `NEXT_PUBLIC_PAYPAL_CLIENT_ID` | Client ID PayPal | Pas `sb` en vrai live |
 | `BLOB_READ_WRITE_TOKEN` | auto si Storage Blob | Uploads admin |
 
@@ -93,7 +93,7 @@ Ou : GitHub → Import projet sur [vercel.com/new](https://vercel.com/new) → F
 - [ ] `MONGODB_URI` pointe vers Atlas (pas 127.0.0.1)
 - [ ] Network Access Atlas = `0.0.0.0/0`
 - [ ] Seed exécuté une fois (local avec URI Atlas ou script one-shot)
-- [ ] `NEXT_PUBLIC_BASE_URL` = URL Vercel réelle
+- [ ] `BASE_URL` = URL Vercel réelle
 - [ ] Blob store créé **ou** médias en URL externes
 - [ ] Test login admin + création produit
 - [ ] Test page `/live` avec URL stream HTTPS
@@ -149,6 +149,6 @@ GOOGLE_CLIENT_ID=....apps.googleusercontent.com
 GOOGLE_CLIENT_SECRET=GOCSPX-....
 ```
 
-6. Sur Vercel : ajouter les 2 variables + `NEXT_PUBLIC_BASE_URL` exact de production.
+6. Sur Vercel : ajouter les 2 variables + `BASE_URL` exact de production.
 
 Connexion / inscription : bouton **Continuer avec Google** sur `/login` et `/register`.
