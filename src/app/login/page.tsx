@@ -116,7 +116,7 @@ function LoginForm() {
         </p>
 
         <div className="mt-6 p-3 bg-stage-800/50 rounded-xl text-[11px] text-stone-500 space-y-1">
-          <p className="text-stone-400 font-medium">Démo email</p>
+          <p className="text-stone-400 font-normal">Démo email</p>
           <p>admin@shop.com / admin123</p>
           <p>user@shop.com / user123</p>
         </div>

@@ -108,7 +108,7 @@ export default function EventsPage() {
 
           <div className="grid grid-cols-7 gap-1 text-center text-xs text-slate-400 mb-2">
             {["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"].map((d) => (
-              <div key={d} className="py-1 font-medium">
+              <div key={d} className="py-1 font-normal">
                 {d}
               </div>
             ))}
@@ -164,7 +164,7 @@ export default function EventsPage() {
               <button
                 key={c}
                 onClick={() => setFilter(c)}
-                className={`px-3 py-1.5 rounded-full text-sm font-medium transition ${
+                className={`px-3 py-1.5 rounded-full text-sm font-normal transition ${
                   filter === c
                     ? "bg-primary-600 text-white"
                     : "bg-slate-100 text-slate-600 hover:bg-slate-200"
@@ -217,7 +217,7 @@ export default function EventsPage() {
                         {categoryLabels[event.category] || event.category}
                       </span>
                       {event.featured && (
-                        <span className="text-xs bg-primary-100 text-primary-700 px-2 py-0.5 rounded-full font-medium">
+                        <span className="text-xs bg-primary-100 text-primary-700 px-2 py-0.5 rounded-full font-normal">
                           À ne pas manquer
                         </span>
                       )}

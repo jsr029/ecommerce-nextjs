@@ -122,7 +122,7 @@ export default function CheckoutPage() {
               ] as const
             ).map(([key, label]) => (
               <div key={key}>
-                <label className="block text-sm font-medium text-slate-700 mb-1">
+                <label className="block text-sm font-normal text-slate-700 mb-1">
                   {label}
                 </label>
                 <input
@@ -180,7 +180,7 @@ export default function CheckoutPage() {
                     <span className="text-xs text-primary-600 ml-1">(digital)</span>
                   )}
                 </span>
-                <span className="font-medium">
+                <span className="font-normal">
                   {(item.product.price * item.quantity).toFixed(2)} €
                 </span>
               </div>

@@ -83,7 +83,7 @@ export default function LivePage() {
                       />
                       <div className="min-w-0">
                         <div className="flex items-center gap-2">
-                          <p className="font-medium text-slate-900 truncate">{s.title}</p>
+                          <p className="font-normal text-slate-900 truncate">{s.title}</p>
                           {s.isLive && (
                             <span className="shrink-0 w-2 h-2 bg-red-500 rounded-full animate-pulse" />
                           )}
